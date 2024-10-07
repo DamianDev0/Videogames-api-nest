@@ -4,6 +4,7 @@ import { UserService } from '../user/user.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { BcryptService } from '../common/services/bcrypt.service';
+import { User } from '../user/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +15,7 @@ export class AuthService {
   ) { }
 
   private generateToken(user: any): string {
-    const payload = { sub: user.id, email: user.email, role: user.role };
+    const payload = { id: user.id, email: user.email, role: user.role };
     return this.jwtService.sign(payload);
   }
 
@@ -38,6 +39,10 @@ export class AuthService {
     return {
       accessToken
     };
+  }
+
+  async findAllUsers(): Promise<User[]>{
+    return this.userService.findAllUsers();
   }
 
 

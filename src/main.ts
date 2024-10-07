@@ -2,6 +2,8 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { AllExceptionsFilter } from './common/excepcion-filters/exception-filter';
+import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 
 
 async function bootstrap() {
@@ -19,6 +21,9 @@ async function bootstrap() {
     }),
   );
 
+  app.useGlobalInterceptors( new ResponseInterceptor)
+  app.useGlobalFilters(new AllExceptionsFilter)
+
 
   const config = new DocumentBuilder()
     .setTitle('videogames example')
@@ -27,11 +32,10 @@ async function bootstrap() {
     .addTag('videogames')
     .addBearerAuth()
     .build();
+
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
+  
   await app.listen(process.env.PORT || 3000);
-
-
-
 }
 bootstrap();

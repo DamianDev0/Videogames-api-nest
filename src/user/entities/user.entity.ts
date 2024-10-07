@@ -1,5 +1,6 @@
+import { Favorite } from "../../favorite/entities/favorite.entity";
 import { Role } from "../../common/enums/role.enum";
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class User extends BaseEntity {
@@ -23,6 +24,9 @@ export class User extends BaseEntity {
 
     @Column({ type: 'enum', default: Role.USER, enum: Role })
     role: Role;
+
+    @OneToMany(() => Favorite, favorite => favorite.user, { cascade: true })
+    favorites: Favorite[];
 
     @CreateDateColumn()
     createdAt: Date;

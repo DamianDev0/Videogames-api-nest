@@ -3,6 +3,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { FavoriteModule } from './favorite/favorite.module';
+import { GameModule } from './game/game.module';
+import { GenreModule } from './genre/genre.module';
 
 @Module({
   imports: [
@@ -28,6 +31,9 @@ import { AuthModule } from './auth/auth.module';
     }),
     UserModule,
     AuthModule,
+    FavoriteModule,
+    GameModule,
+    GenreModule,
     
   ],
   controllers: [],
